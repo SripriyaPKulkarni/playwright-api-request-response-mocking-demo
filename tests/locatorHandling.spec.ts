@@ -1,5 +1,5 @@
 /*
-Id, name, datat-test-id, placeholder, class, css, xpath
+Id, name, data-test-id, placeholder, class, css, xpath
 */
 
 import { expect } from '@playwright/test';
