@@ -33,8 +33,6 @@ test('Checkbox button Handling', async ({ page }) => {
     await expect(checkbox4).not.toBeChecked();
 });
 
-
-
 test('Simple Alert Handling', async ({ page }) => {
     await page.goto('https://www.lambdatest.com/selenium-playground/javascript-alert-box-demo');
     page.on('dialog',async(alert)=>{
@@ -81,7 +79,6 @@ test('Single Static DropDown Handling', async ({ page }) => {
     await page.selectOption('#select-demo',{
        index:1
     });
-    await page.pause();
 });
 
 test('Multi Static DropDown Handling', async ({ page }) => {
@@ -91,7 +88,6 @@ test('Multi Static DropDown Handling', async ({ page }) => {
         {label:"New Jersey"},
         {index:4}
     ])
-    await page.waitForTimeout(3000);
 });
 
 test('Searchable Dynamic DropDown', async ({ page }) => {
@@ -123,7 +119,6 @@ test('Single Window Handling', async ({ page }) => {
   ]);
   await newWindow.waitForLoadState();
   await newWindow.locator('div[aria-label="Close"]').click();
-  await newWindow.waitForTimeout(3000);
   await newWindow.close();
 });
 
@@ -139,7 +134,6 @@ test('Multiple Window Handling', async ({ page }) => {
   await pages[1].locator('div[aria-label="Close"]').click();
   await pages[2].getByRole('button', { name: 'No, thanks' }).click();
   await pages[2].locator('div[aria-label="Follow @lambdatesting"]').click();
-  await page.pause();
   await pages[1].close();
   await pages[2].close();
 });
