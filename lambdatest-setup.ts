@@ -15,8 +15,8 @@ const capabilities = {
   browserVersion: "latest",
   "LT:Options": {
     platform: "Windows 11",
-    build: "Playwright Lambdatest 14th May",
-    name: "Playwright Lambdatest 14th May",
+    build: "Playwright Lambdatest",
+    name: "Playwright Lambdatest",
     user: process.env.LT_USERNAME,
     accessKey: process.env.LT_ACCESS_KEY,
     network: true,
@@ -24,7 +24,7 @@ const capabilities = {
     console: true,
     tunnel: false, // Add tunnel configuration if testing locally hosted webpage
     tunnelName: "", // Optional
-    geoLocation: "", // country code can be fetched from https://www.lambdatest.com/capabilities-generator/
+    geoLocation: "US", // country code can be fetched from https://www.lambdatest.com/capabilities-generator/
   },
 };
 
