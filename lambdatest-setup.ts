@@ -10,6 +10,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // LambdaTest capabilities
+// These are base configurations.
+// But to run with different browser and OS please use projects mentioned in the playwright.config.ts
 const capabilities = {
   browserName: "MicrosoftEdge", // Browsers allowed: `Chrome`, `MicrosoftEdge`, `pw-chromium`, `pw-firefox` and `pw-webkit`
   browserVersion: "latest",

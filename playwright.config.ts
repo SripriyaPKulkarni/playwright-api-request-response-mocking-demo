@@ -10,7 +10,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  timeout:60000,
+  timeout: 60000,
   testDir: './tests',
   workers: 4,
   /* Run tests in files in parallel */
@@ -33,11 +33,45 @@ export default defineConfig({
   },
 
   /* Configure projects for major browsers */
+  // -- LambdaTest Config --
+  // name in the format: browserName:browserVersion:platform@lambdatest
+  // Browsers allowed: `Chrome`, `MicrosoftEdge`, `pw-chromium`, `pw-firefox` and `pw-webkit`
+  // Use additional configuration options provided by Playwright if required: https://playwright.dev/docs/api/class-testconfig
   projects: [
+    {
+      name: "chrome:latest:Windows 10@lambdatest",
+      use: {
+        viewport: { width: 1280, height: 720 },
+      },
+    },
     {
       name: "chrome:latest:Windows 11@lambdatest",
       use: {
         viewport: { width: 1280, height: 720 },
+      },
+    },
+    {
+      name: "chrome:latest:MacOS Catalina@lambdatest",
+      use: {
+        viewport: { width: 1920, height: 1080 },
+      },
+    },
+    {
+      name: "pw-firefox:latest:Windows 11@lambdatest",
+      use: {
+        viewport: { width: 1280, height: 720 },
+      },
+    },
+    {
+      name: "pw-webkit:latest:Windows 10@lambdatest",
+      use: {
+        viewport: { width: 1920, height: 1080 },
+      },
+    },
+    {
+      name: "MicrosoftEdge:latest:MacOS Ventura@lambdatest",
+      use: {
+        ...devices["iPhone 12 Pro Max"],
       },
     },
     // {
