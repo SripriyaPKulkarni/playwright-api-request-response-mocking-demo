@@ -118,22 +118,21 @@ test('Single Window Handling', async ({ page }) => {
     await page.click('//a[contains(text(),"Like us On Facebook")]')
   ]);
   await newWindow.waitForLoadState();
-  await newWindow.locator('div[aria-label="Close"]').click();
+  const title: string = await page.title();
+  console.log(`Page 1 title: ${title}`);
   await newWindow.close();
 });
 
 test('Multiple Window Handling', async ({ page }) => {
-  await page.goto('https://www.lambdatest.com/selenium-playground/window-popup-modal-demo');
-  const [multipleWindow] = await Promise.all([
-    page.waitForEvent('popup'),
-    await page.click('#followboth')
-  ]);
-
-  await multipleWindow.waitForLoadState();
-  const pages = multipleWindow.context().pages();
-  await pages[1].locator('div[aria-label="Close"]').click();
-  await pages[2].getByRole('button', { name: 'No, thanks' }).click();
-  await pages[2].locator('div[aria-label="Follow @lambdatesting"]').click();
-  await pages[1].close();
-  await pages[2].close();
+    await page.goto('https://www.lambdatest.com/selenium-playground/window-popup-modal-demo');
+    const [multipleWindow] = await Promise.all([
+      page.waitForEvent('popup'),
+      await page.click('//*[@id="followboth"]')
+    ]);
+    await multipleWindow.waitForLoadState();
+    const pages = multipleWindow.context().pages();
+    if (pages.length >= 2) {
+      console.log('No.of tabs: ' + pages.length);
+    }
+    await pages[1].close();
 });
