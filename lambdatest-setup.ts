@@ -45,15 +45,15 @@ const modifyCapabilities = (configName, testName) => {
     ? platform
     : capabilities["LT:Options"]["platform"];
   capabilities["LT:Options"]["name"] = testName;
-// Get current date
-const currentDate = new Date();
-const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-const formattedDate = currentDate.toLocaleDateString('en-US', options);
+  // Get current date
+  const currentDate = new Date();
+  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+  const formattedDate = currentDate.toLocaleDateString('en-US', options);
 
 
-// Update build and name properties
-capabilities["LT:Options"]["build"] = `Playwright Lambdatest ${formattedDate}`;
-capabilities["LT:Options"]["name"] = `${testName}`;
+  // Update build and name properties
+  capabilities["LT:Options"]["build"] = `Playwright Lambdatest ${formattedDate}`;
+  capabilities["LT:Options"]["name"] = `${testName}`;
 };
 
 const getErrorMessage = (obj, keys) =>
@@ -63,8 +63,8 @@ const getErrorMessage = (obj, keys) =>
   );
 
 const test = base.test.extend({
-  page: async ({ page, playwright }, use, testInfo) => {  
-    
+  page: async ({ page, playwright }, use, testInfo) => {
+
     // Configure LambdaTest platform for cross-browser testing
     let fileName = testInfo.file.split(path.sep).pop();
     if (testInfo.project.name.match(/lambdatest/)) {
@@ -79,14 +79,10 @@ const test = base.test.extend({
       });
 
       const ltPage = await browser.newPage(testInfo.project.use);
-      const { width, height } = await ltPage.evaluate(() => {
-        return {
-          width: window.screen.availWidth,
-          height: window.screen.availHeight
-        };
-        });
-        await ltPage.setViewportSize({ width, height });
-        await use(ltPage);
+      await ltPage.waitForLoadState('domcontentloaded');
+      await ltPage.setViewportSize({ width: 1920, height: 1080 }); // Set a default viewport size
+      await ltPage.waitForTimeout(2000); // Wait for a short period to ensure the window is maximized
+      await use(ltPage);
 
       const testStatus = {
         action: "setTestStatus",
@@ -95,8 +91,8 @@ const test = base.test.extend({
           remark: getErrorMessage(testInfo, ["error", "message"]),
         },
       };
-      await ltPage.evaluate(() => {},
-      `lambdatest_action: ${JSON.stringify(testStatus)}`);
+      await ltPage.evaluate(() => { },
+        `lambdatest_action: ${JSON.stringify(testStatus)}`);
       await ltPage.close();
       await browser.close();
     } else {
