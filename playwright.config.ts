@@ -42,13 +42,19 @@ export default defineConfig({
     {
       name: "chrome:latest:Windows 10@lambdatest",
       use: {
-        viewport: { width: 1280, height: 720 },
+        viewport: { width: 1280, height: 1080 },
       },
     },
     {
       name: "chrome:latest:Windows 11@lambdatest",
       use: {
-        viewport: { width: 1280, height: 720 },
+        viewport: { width: 1280, height: 1080 },
+      },
+    },
+    {
+      name: "MicrosoftEdge:latest:Windows 11@lambdatest",
+      use: {
+        viewport: { width: 1280, height: 1080 },
       },
     },
     {
@@ -60,7 +66,7 @@ export default defineConfig({
     {
       name: "pw-firefox:latest:Windows 11@lambdatest",
       use: {
-        viewport: { width: 1280, height: 720 },
+        viewport: { width: 1280, height: 1080 },
       },
     },
     {
@@ -72,7 +78,7 @@ export default defineConfig({
     {
       name: "MicrosoftEdge:latest:MacOS Ventura@lambdatest",
       use: {
-        ...devices["iPhone 12 Pro Max"],
+        viewport: { width: 1920, height: 1080 },
       },
     },
     // {
