@@ -27,6 +27,7 @@ const capabilities = {
     tunnel: false, // Add tunnel configuration if testing locally hosted webpage
     tunnelName: "", // Optional
     geoLocation: "US", // country code can be fetched from https://www.lambdatest.com/capabilities-generator/
+    region: "us" // country code can be fetched from https://www.lambdatest.com/capabilities-generator/
   },
 };
 
@@ -73,13 +74,19 @@ const test = base.test.extend({
       );
 
       const browser = await chromium.connect({
-        wsEndpoint: `wss://cdp.lambdatest.com/playwright?capabilities=${encodeURIComponent(
-          JSON.stringify(capabilities)
-        )}`,
+        wsEndpoint: `wss://cdp.lambdatest.com/playwright?capabilities=${encodeURIComponent(JSON.stringify(capabilities))}`,
+        timeout: 60000 // Timeout in milliseconds (e.g., 60000ms = 60 seconds)
       });
 
       const ltPage = await browser.newPage(testInfo.project.use);
-      await use(ltPage);
+      const { width, height } = await ltPage.evaluate(() => {
+        return {
+          width: window.screen.availWidth,
+          height: window.screen.availHeight
+        };
+        });
+        await ltPage.setViewportSize({ width, height });
+        await use(ltPage);
 
       const testStatus = {
         action: "setTestStatus",
@@ -91,7 +98,7 @@ const test = base.test.extend({
       await ltPage.evaluate(() => {},
       `lambdatest_action: ${JSON.stringify(testStatus)}`);
       await ltPage.close();
-      // await browser.close();
+      await browser.close();
     } else {
       // Run tests in local in case of local config provided
       await use(page);
