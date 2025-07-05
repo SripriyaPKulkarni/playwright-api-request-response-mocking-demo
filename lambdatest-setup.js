@@ -13,7 +13,7 @@ dotenv.config();
 // These are base configurations.
 // But to run with different browser and OS please use projects mentioned in the playwright.config.ts
 const capabilities = {
-  browserName: "MicrosoftEdge", // Browsers allowed: `Chrome`, `MicrosoftEdge`, `pw-chromium`, `pw-firefox` and `pw-webkit`
+  browserName: "MicrosoftEdge", 
   browserVersion: "latest",
   "LT:Options": {
     platform: "Windows 11",
@@ -43,14 +43,7 @@ const modifyCapabilities = (configName, testName) => {
     ? platform
     : capabilities["LT:Options"]["platform"];
   capabilities["LT:Options"]["name"] = testName;
-  // Get current date
-  const currentDate = new Date();
-  const formattedDate = currentDate.toLocaleDateString('en-US', options);
 
-
-  // Update build and name properties
-  capabilities["LT:Options"]["build"] = `Playwright Lambdatest ${formattedDate}`;
-  capabilities["LT:Options"]["name"] = `${testName}`;
 };
 
 const getErrorMessage = (obj, keys) =>
